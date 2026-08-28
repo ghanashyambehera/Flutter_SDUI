@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 1,
+  "screenId": "signup",
+  "title": "Create account",
+  "safeArea": true,
+  "theme": {
+    "primaryColor": "brand.primary",
+    "backgroundColor": "neutral.background"
+  },
+  "forms": {
+    "signup_form": {
+      "fields": ["fullName", "email", "password", "confirmPassword", "termsAccepted"]
+    }
+  },
+  "root": {
+    "id": "signup_root",
+    "type": "scaffold",
+    "props": {
+      "backgroundColor": "neutral.background"
+    },
+    "children": [
+      {
+        "id": "signup_app_bar",
+        "type": "appBar",
+        "props": {
+          "title": "Sign up",
+          "showBack": true
+        },
+        "actions": {
+          "onBack": {
+            "type": "pop"
+          }
+        }
+      },
+      {
+        "id": "signup_scroll",
+        "type": "scroll",
+        "children": [
+          {
+            "id": "signup_column",
+            "type": "column",
+            "props": {
+              "gap": "spacing.md",
+              "padding": "spacing.xl",
+              "crossAxisAlignment": "stretch"
+            },
+            "children": [
+              {
+                "id": "headline",
+                "type": "text",
+                "props": {
+                  "value": "Create your account",
+                  "style": "headline"
+                }
+              },
+              {
+                "id": "subtitle",
+                "type": "text",
+                "props": {
+                  "value": "We'll send a verification code after you register.",
+                  "style": "body"
+                }
+              },
+              {
+                "id": "name_field",
+                "type": "textField",
+                "bind": "fullName",
+                "props": {
+                  "label": "Full name",
+                  "placeholder": "Your name",
+                  "keyboard": "name",
+                  "autofill": "name",
+                  "textInputAction": "next"
+                },
+                "validators": [
+                  {
+                    "type": "required",
+                    "message": "Name is required"
+                  },
+                  {
+                    "type": "minLength",
+                    "value": 2,
+                    "message": "Enter your full name"
+                  }
+                ]
+              },
+              {
+                "id": "email_field",
+                "type": "textField",
+                "bind": "email",
+                "props": {
+                  "label": "Email",
+                  "placeholder": "you@example.com",
+                  "keyboard": "email",
+                  "autofill": "email",
+                  "textInputAction": "next"
+                },
+                "validators": [
+                  {
+                    "type": "required",
+                    "message": "Email is required"
+                  },
+                  {
+                    "type": "email",
+                    "message": "Enter a valid email"
+                  }
+                ]
+              },
+              {
+                "id": "password_field",
+                "type": "textField",
+                "bind": "password",
+                "props": {
+                  "label": "Password",
+                  "placeholder": "At least 8 characters",
+                  "obscure": true,
+                  "autofill": "newPassword",
+                  "textInputAction": "next"
+                },
+                "validators": [
+                  {
+                    "type": "required",
+                    "message": "Password is required"
+                  },
+                  {
+                    "type": "minLength",
+                    "value": 8,
+                    "message": "Use at least 8 characters"
+                  }
+                ]
+              },
+              {
+                "id": "confirm_password_field",
+                "type": "textField",
+                "bind": "confirmPassword",
+                "props": {
+                  "label": "Confirm password",
+                  "placeholder": "Re-enter password",
+                  "obscure": true,
+                  "textInputAction": "done"
+                },
+                "validators": [
+                  {
+                    "type": "required",
+                    "message": "Confirm your password"
+                  },
+                  {
+                    "type": "matchField",
+                    "field": "password",
+                    "message": "Passwords do not match"
+                  }
+                ]
+              },
+              {
+                "id": "terms",
+                "type": "checkbox",
+                "bind": "termsAccepted",
+                "props": {
+                  "label": "I agree to the Terms and Privacy Policy"
+                },
+                "validators": [
+                  {
+                    "type": "requiredTrue",
+                    "message": "Please accept the terms to continue"
+                  }
+                ]
+              },
+              {
+                "id": "submit",
+                "type": "button",
+                "props": {
+                  "label": "Create account",
+                  "variant": "primary",
+                  "fullWidth": true,
+                  "loadingWhen": "submitting"
+                },
+                "actions": {
+                  "onTap": {
+                    "type": "submit_form",
+                    "formId": "signup_form",
+                    "actionId": "submit_signup"
+                  }
+                }
+              },
+              {
+                "id": "login_row",
+                "type": "row",
+                "props": {
+                  "mainAxisAlignment": "center",
+                  "gap": "spacing.xs"
+                },
+                "children": [
+                  {
+                    "id": "have_account",
+                    "type": "text",
+                    "props": {
+                      "value": "Already have an account?",
+                      "style": "body"
+                    }
+                  },
+                  {
+                    "id": "go_login",
+                    "type": "textButton",
+                    "props": {
+                      "label": "Sign in"
+                    },
+                    "actions": {
+                      "onTap": {
+                        "type": "navigate",
+                        "screenId": "login"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

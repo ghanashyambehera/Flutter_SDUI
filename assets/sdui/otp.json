@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "screenId": "otp",
+  "title": "Verify",
+  "safeArea": true,
+  "theme": {
+    "primaryColor": "brand.primary",
+    "backgroundColor": "neutral.background"
+  },
+  "params": {
+    "destination": "",
+    "flow": "signup"
+  },
+  "initialState": {
+    "resendSecondsLeft": 30
+  },
+  "forms": {
+    "otp_form": {
+      "fields": ["otp"]
+    }
+  },
+  "root": {
+    "id": "otp_root",
+    "type": "scaffold",
+    "props": {
+      "backgroundColor": "neutral.background"
+    },
+    "children": [
+      {
+        "id": "otp_app_bar",
+        "type": "appBar",
+        "props": {
+          "title": "Verification",
+          "showBack": true
+        },
+        "actions": {
+          "onBack": {
+            "type": "pop"
+          }
+        }
+      },
+      {
+        "id": "otp_scroll",
+        "type": "scroll",
+        "children": [
+          {
+            "id": "otp_column",
+            "type": "column",
+            "props": {
+              "gap": "spacing.lg",
+              "padding": "spacing.xl",
+              "crossAxisAlignment": "stretch"
+            },
+            "children": [
+              {
+                "id": "headline",
+                "type": "text",
+                "props": {
+                  "value": "Enter the code",
+                  "style": "headline"
+                }
+              },
+              {
+                "id": "subtitle",
+                "type": "text",
+                "props": {
+                  "value": "We sent a 6-digit code to {{destination}}",
+                  "style": "body"
+                }
+              },
+              {
+                "id": "otp_input",
+                "type": "otpField",
+                "bind": "otp",
+                "props": {
+                  "length": 6,
+                  "keyboard": "number",
+                  "autofill": "oneTimeCode",
+                  "obscure": false
+                },
+                "validators": [
+                  {
+                    "type": "required",
+                    "message": "Enter the verification code"
+                  },
+                  {
+                    "type": "otpLength",
+                    "value": 6,
+                    "message": "Enter all 6 digits"
+                  }
+                ],
+                "actions": {
+                  "onCompleted": {
+                    "type": "submit_form",
+                    "formId": "otp_form",
+                    "actionId": "submit_otp"
+                  }
+                }
+              },
+              {
+                "id": "otp_error_banner",
+                "type": "banner",
+                "visibleWhen": {
+                  "field": "otp",
+                  "op": "hasError"
+                },
+                "props": {
+                  "severity": "error",
+                  "messageFrom": "fieldError.otp"
+                }
+              },
+              {
+                "id": "submit",
+                "type": "button",
+                "props": {
+                  "label": "Verify",
+                  "variant": "primary",
+                  "fullWidth": true,
+                  "loadingWhen": "submitting"
+                },
+                "actions": {
+                  "onTap": {
+                    "type": "submit_form",
+                    "formId": "otp_form",
+                    "actionId": "submit_otp"
+                  }
+                }
+              },
+              {
+                "id": "resend_hint",
+                "type": "text",
+                "visibleWhen": {
+                  "field": "resendSecondsLeft",
+                  "op": "gt",
+                  "value": 0
+                },
+                "props": {
+                  "value": "Resend code in {{resendSecondsLeft}}s",
+                  "style": "caption",
+                  "alignment": "center"
+                }
+              },
+              {
+                "id": "resend",
+                "type": "textButton",
+                "visibleWhen": {
+                  "field": "resendSecondsLeft",
+                  "op": "eq",
+                  "value": 0
+                },
+                "props": {
+                  "label": "Resend code",
+                  "alignment": "center"
+                },
+                "actions": {
+                  "onTap": {
+                    "type": "resend_otp",
+                    "actionId": "resend_otp",
+                    "then": {
+                      "type": "set_state",
+                      "patch": {
+                        "resendSecondsLeft": 30
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

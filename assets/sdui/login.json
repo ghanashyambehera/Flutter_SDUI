@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 1,
+  "screenId": "login",
+  "title": "Sign in",
+  "safeArea": true,
+  "theme": {
+    "primaryColor": "brand.primary",
+    "backgroundColor": "neutral.background"
+  },
+  "forms": {
+    "login_form": {
+      "fields": ["email", "password"]
+    }
+  },
+  "root": {
+    "id": "login_root",
+    "type": "scaffold",
+    "props": {
+      "backgroundColor": "neutral.background"
+    },
+    "children": [
+      {
+        "id": "login_scroll",
+        "type": "scroll",
+        "children": [
+          {
+            "id": "login_column",
+            "type": "column",
+            "props": {
+              "gap": "spacing.lg",
+              "padding": "spacing.xl",
+              "crossAxisAlignment": "stretch"
+            },
+            "children": [
+              {
+                "id": "logo",
+                "type": "image",
+                "props": {
+                  "assetKey": "brand.logo",
+                  "height": 56,
+                  "fit": "contain"
+                }
+              },
+              {
+                "id": "headline",
+                "type": "text",
+                "props": {
+                  "value": "Welcome back",
+                  "style": "headline"
+                }
+              },
+              {
+                "id": "subtitle",
+                "type": "text",
+                "props": {
+                  "value": "Sign in to continue",
+                  "style": "body"
+                }
+              },
+              {
+                "id": "email_field",
+                "type": "textField",
+                "bind": "email",
+                "props": {
+                  "label": "Email",
+                  "placeholder": "you@example.com",
+                  "keyboard": "email",
+                  "autofill": "email",
+                  "textInputAction": "next"
+                },
+                "validators": [
+                  {
+                    "type": "required",
+                    "message": "Email is required"
+                  },
+                  {
+                    "type": "email",
+                    "message": "Enter a valid email"
+                  }
+                ]
+              },
+              {
+                "id": "password_field",
+                "type": "textField",
+                "bind": "password",
+                "props": {
+                  "label": "Password",
+                  "placeholder": "Your password",
+                  "obscure": true,
+                  "autofill": "password",
+                  "textInputAction": "done"
+                },
+                "validators": [
+                  {
+                    "type": "required",
+                    "message": "Password is required"
+                  },
+                  {
+                    "type": "minLength",
+                    "value": 8,
+                    "message": "Use at least 8 characters"
+                  }
+                ],
+                "actions": {
+                  "onSubmitted": {
+                    "type": "submit_form",
+                    "formId": "login_form",
+                    "actionId": "submit_login"
+                  }
+                }
+              },
+              {
+                "id": "forgot_password",
+                "type": "textButton",
+                "props": {
+                  "label": "Forgot password?",
+                  "alignment": "end"
+                },
+                "actions": {
+                  "onTap": {
+                    "type": "navigate",
+                    "screenId": "forgot_password"
+                  }
+                }
+              },
+              {
+                "id": "submit",
+                "type": "button",
+                "props": {
+                  "label": "Sign in",
+                  "variant": "primary",
+                  "fullWidth": true,
+                  "loadingWhen": "submitting"
+                },
+                "actions": {
+                  "onTap": {
+                    "type": "submit_form",
+                    "formId": "login_form",
+                    "actionId": "submit_login"
+                  }
+                }
+              },
+              {
+                "id": "signup_row",
+                "type": "row",
+                "props": {
+                  "mainAxisAlignment": "center",
+                  "gap": "spacing.xs"
+                },
+                "children": [
+                  {
+                    "id": "no_account",
+                    "type": "text",
+                    "props": {
+                      "value": "Don't have an account?",
+                      "style": "body"
+                    }
+                  },
+                  {
+                    "id": "go_signup",
+                    "type": "textButton",
+                    "props": {
+                      "label": "Sign up"
+                    },
+                    "actions": {
+                      "onTap": {
+                        "type": "navigate",
+                        "screenId": "signup"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
